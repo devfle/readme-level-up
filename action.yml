@@ -1,0 +1,54 @@
+name: 'github-level-system'
+author: 'devfle'
+description: 'Readme level up is a small action that converts interactions made on GitHub into experience points.'
+
+inputs:
+  github_token:
+    description: 'A Github token that allows to communicate with the GitHub GraphQL API. The default should be sufficient.'
+    required: false
+    default: ${{ github.token }}
+  github_username:
+    description: 'Your GitHub username to communicate with the GitHub API'
+    required: true
+    default: ''
+  progress_bar_char_length:
+    description: 'The character length of the Progress bar'
+    required: false
+    default: 30
+  empty_bar:
+    description: 'The character for the empty state of the progress bar'
+    required: false
+    default: '░'
+  filled_bar:
+    description: 'The character for the filled state of the progress bar'
+    required: false
+    default: '█'
+  readme_path:
+    description: 'The path to the markdown file to be edited'
+    required: false
+    default: './README.md'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: setup python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    - name: install packages
+      run: pip install -r $GITHUB_ACTION_PATH/requirements.txt
+      shell: bash
+    - name: run script
+      run: python $GITHUB_ACTION_PATH/main.py
+      shell: bash
+      env:
+        INPUT_GITHUB_TOKEN: ${{ inputs.github_token }}
+        INPUT_GITHUB_USERNAME: ${{ inputs.github_username }}
+        INPUT_PROGRESS_BAR_CHAR_LENGTH: ${{ inputs.progress_bar_char_length }}
+        INPUT_EMPTY_BAR: ${{ inputs.empty_bar }}
+        INPUT_FILLED_BAR: ${{ inputs.filled_bar }}
+        INPUT_README_PATH: ${{ inputs.readme_path }}
+
+branding:
+  icon: 'arrow-up-circle'
+  color: 'blue'
