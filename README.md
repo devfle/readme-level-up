@@ -73,5 +73,6 @@ I appreciate any support with this project. If you have a suggestion for improve
 - This project uses the conventional [commits specification.](https://www.conventionalcommits.org/en/v1.0.0/#specification)
 - Currently Python 3.11 is used.
 - For development, we recommend the usage of the VS-Code Python linter from Microsoft.
+- Please test your changes before opening a new merge request.
 
 
