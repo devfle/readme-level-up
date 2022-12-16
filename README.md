@@ -68,4 +68,10 @@ If you have any ideas about what could be optimized, feel free to create an issu
 
 # Contribution Guide
 
-coming soon
+I appreciate any support with this project. If you have a suggestion for improvement or found a bug, please create a new issue. Please make sure that there is not already an existing issue for your request.
+
+- This project uses the conventional [commits specification.](https://www.conventionalcommits.org/en/v1.0.0/#specification)
+- Currently Python 3.11 is used.
+- For development, we recommend the usage of the VS-Code Python linter from Microsoft.
+
+
