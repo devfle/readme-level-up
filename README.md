@@ -4,7 +4,6 @@ Readme level up is a small action that converts interactions made on GitHub into
 
 <img width="875" alt="01" src="https://user-images.githubusercontent.com/52854338/206877769-3463c59a-af0b-4fab-bde4-aec71ecfb5c2.png">
 
-
 # Setup Action
 
 I explain here how to set up the action. The Github profile readme serves as an example. But any other readme can be used as well.
@@ -17,7 +16,6 @@ I explain here how to set up the action. The Github profile readme serves as an 
 ```
 
 2. create a new workflow with the following example content.
-
 
 # Example Action Setup
 
@@ -50,14 +48,14 @@ jobs:
           branch: main
 ```
 
-
-
 # Environment Variables
 
 All available environment variables and their default values can be found in the [action.yml file.](../main/action.yml)
 
 # Todos
+
 I started the project because I had a fun idea and wanted to learn Python. Some things still need to be done:
+
 - add types to all vars
 - add error management
 - add more data to level calculation
@@ -72,15 +70,31 @@ I appreciate any support with this project. If you have a suggestion for improve
 
 - This project uses the conventional [commits specification.](https://www.conventionalcommits.org/en/v1.0.0/#specification)
 - Currently Python 3.11 is used.
-- For development, we recommend the usage of the VS-Code Python linter from Microsoft.
+- For development, we recommend the usage of the VS-Code Python linter from Microsoft (Pylance).
 - Please test your changes before opening a new merge request.
 
 You have to install some packages before starting to develop:
+
 ```bash
 pip install -r requirements.txt
 ```
 
 To start the script, you have to call:
+
 ```bash
 python main.py
+```
 
+Please follow these coding guidelines:
+
+```python
+# var names in snake_case
+var_name: int = 1
+
+# function names in snake_case
+def function_name -> None:
+    pass
+
+# const names in uppercase
+CONSTANT_NAME: int = 1
+```
