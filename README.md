@@ -75,4 +75,12 @@ I appreciate any support with this project. If you have a suggestion for improve
 - For development, we recommend the usage of the VS-Code Python linter from Microsoft.
 - Please test your changes before opening a new merge request.
 
+You have to install some packages before starting to develop:
+```bash
+pip install -r requirements.txt
+```
+
+To start the script, you have to call:
+```bash
+python main.py
 
