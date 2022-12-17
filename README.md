@@ -12,7 +12,7 @@ I explain here how to set up the action. The Github profile readme serves as an 
 
 ```text
 <!--README_LEVEL_UP:START-->
-<!--README_LEVEL_UP:STOP-->
+<!--README_LEVEL_UP:END-->
 ```
 
 2. create a new workflow with the following example content.
