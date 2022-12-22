@@ -37,6 +37,10 @@ if __name__ == "__main__":
     user_level, to_next_lvl = itemgetter("current_level",
                                         "percentage_level")(readme_instance.calc_current_level())
 
+    CONTRIBUTION_EP = readme_instance.contribution_ep
+    # should be generated in later versions
+    ep_information = f"<pre>💪 1x contribute → { CONTRIBUTION_EP } experience points</pre>\n"
+
     readme_path: str = getenv("INPUT_README_PATH")
     start_section: str = "<!--README_LEVEL_UP:START-->"
     end_section: str = "<!--README_LEVEL_UP:END-->"
@@ -45,6 +49,7 @@ if __name__ == "__main__":
                         "```text\n"
                         f"level: { user_level }  { draw_progress_bar() } {round(to_next_lvl, 2)}%\n"
                         "```\n"
+                        f"{ ep_information if getenv('INPUT_SHOW_EP_INFO') else '' }"
                         f"{end_section}")
 
 

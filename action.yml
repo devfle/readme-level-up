@@ -27,6 +27,10 @@ inputs:
     description: 'The path to the markdown file to be edited'
     required: false
     default: './README.md'
+  show_ep_info:
+    description: 'If true, shows an pre element with all ep information'
+    required: false
+    default: true
 
 runs:
   using: 'composite'
@@ -48,6 +52,7 @@ runs:
         INPUT_EMPTY_BAR: ${{ inputs.empty_bar }}
         INPUT_FILLED_BAR: ${{ inputs.filled_bar }}
         INPUT_README_PATH: ${{ inputs.readme_path }}
+        INPUT_SHOW_EP_INFO: ${{ inputs.show_ep_info }}
 
 branding:
   icon: 'arrow-up-circle'
