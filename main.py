@@ -46,9 +46,7 @@ if __name__ == "__main__":
     end_section: str = "<!--README_LEVEL_UP:END-->"
     search_pattern: str = fr"{start_section}[\s\S]*?{end_section}"
     replace_str: str = (f"{start_section}\n"
-                        "```text\n"
-                        f"level: { user_level }  { draw_progress_bar() } {round(to_next_lvl, 2)}%\n"
-                        "```\n"
+                        f"<pre>level: { user_level }  { draw_progress_bar() } {round(to_next_lvl, 2)}%</pre>\n"
                         f"{ ep_information if getenv('INPUT_SHOW_EP_INFO') else '' }"
                         f"{end_section}")
 
