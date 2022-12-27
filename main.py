@@ -7,7 +7,7 @@ from readme_level import ReadmeLevel
 
 
 
-def draw_progress_bar() -> str:
+def draw_progress_bar(current_progress: float | int) -> str:
     """Draws the progress bar"""
     progress_bar_length: int = int(getenv("INPUT_PROGRESS_BAR_CHAR_LENGTH"))
 
@@ -17,7 +17,7 @@ def draw_progress_bar() -> str:
     }
 
     progress_bar: str = ""
-    filled_progress: int = round(progress_bar_length * (50 / 100), 0)
+    filled_progress: int = round(progress_bar_length * (current_progress / 100), 0)
 
     for index in range(progress_bar_length):
 
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     end_section: str = "<!--README_LEVEL_UP:END-->"
     search_pattern: str = fr"{start_section}[\s\S]*?{end_section}"
     replace_str: str = (f"{start_section}\n"
-                        f"<pre>level: { user_level }  { draw_progress_bar() } {round(to_next_lvl, 2)}%</pre>\n"
+                        f"<pre>level: { user_level }  { draw_progress_bar(to_next_level) } {round(to_next_lvl, 2)}%</pre>\n"
                         f"{ ep_information if getenv('INPUT_SHOW_EP_INFO') else '' }"
                         f"{end_section}")
 
