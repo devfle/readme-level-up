@@ -21,10 +21,12 @@ def draw_progress_bar(current_progress: float | int) -> str:
 
     for index in range(progress_bar_length):
 
-        if index <= filled_progress:
+        # because the index starts at 0 we reduce filled_progress
+        # we should define our own index
+        if index <= filled_progress - 1:
             progress_bar += progress_bar_content["filled_bar"]
 
-        if index > filled_progress:
+        if index > filled_progress - 1:
             progress_bar += progress_bar_content["empty_bar"]
 
     return progress_bar
