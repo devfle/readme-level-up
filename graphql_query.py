@@ -9,6 +9,9 @@ QUERY = f"""
                             totalContributions
                         }}
                     }}
+                    followers {{
+                        totalCount
+                    }}
                 }}
             }}
         """

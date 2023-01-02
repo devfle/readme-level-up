@@ -40,8 +40,10 @@ if __name__ == "__main__":
                                         "percentage_level")(readme_instance.calc_current_level())
 
     CONTRIBUTION_EP = readme_instance.contribution_ep
+    FOLLOWER_EP = readme_instance.follower_ep
     # should be generated in later versions
-    ep_information = f"<pre>💪 1x contribute → { CONTRIBUTION_EP } experience points</pre>\n"
+    ep_information = (f"<pre>💪 1x contribute → { CONTRIBUTION_EP } experience points\n"
+                      f"🌟 1x follower → { FOLLOWER_EP } experience points</pre>\n")
 
     readme_path: str = getenv("INPUT_README_PATH")
     start_section: str = "<!--README_LEVEL_UP:START-->"

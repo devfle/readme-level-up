@@ -24,7 +24,7 @@ class ReadmeLevel:
     project_ep: int = 5
     discussion_ep: int = 10
     star_ep: int = 40
-    follower_ep: int = 50
+    follower_ep: int = 25
 
     def __init__(self) -> None:
         pass
@@ -42,8 +42,12 @@ class ReadmeLevel:
 
         if response.status_code == 200:
             response_data = response.json()
+
             user_data = (response_data["data"]["user"]
                          ["contributionsCollection"]["contributionCalendar"])
+
+            user_data["totalFollowers"] = (response_data["data"]["user"]
+                         ["followers"]["totalCount"])
 
             return user_data
 
@@ -61,7 +65,7 @@ class ReadmeLevel:
         key_mapper = {
             "totalContributions": "contribution_count",
             "projects": "project_count",
-            "follower": "follower_count",
+            "totalFollowers": "follower_count",
             "discussions": "discussion_count"
         }
 
