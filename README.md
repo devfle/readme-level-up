@@ -42,7 +42,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git commit --allow-empty -am "update readme"
       - name: push changes
-        uses: ad-m/github-push-action@v0.6.0
+        uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: main
