@@ -50,6 +50,7 @@ if __name__ == "__main__":
     end_section: str = "<!--README_LEVEL_UP:END-->"
     search_pattern: str = fr"{start_section}[\s\S]*?{end_section}"
     replace_str: str = (f"{start_section}\n"
+                        f"{ getenv('INPUT_CARD_TITLE') if getenv('INPUT_CARD_TITLE') else '' } \n"
                         f"<pre>level: { user_level }  { draw_progress_bar(to_next_lvl) } {round(to_next_lvl, 2)}%</pre>\n"
                         f"{ ep_information if getenv('INPUT_SHOW_EP_INFO') else '' }"
                         f"{end_section}")

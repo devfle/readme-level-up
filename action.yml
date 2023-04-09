@@ -31,6 +31,10 @@ inputs:
     description: 'If true, shows an pre element with all ep information'
     required: false
     default: true
+  card_title:
+    description: 'The title of the level up card'
+    required: false
+    default: 'My Github level 🎊'
 
 runs:
   using: 'composite'
@@ -53,6 +57,7 @@ runs:
         INPUT_FILLED_BAR: ${{ inputs.filled_bar }}
         INPUT_README_PATH: ${{ inputs.readme_path }}
         INPUT_SHOW_EP_INFO: ${{ inputs.show_ep_info }}
+        INPUT_CARD_TITLE: ${{ inputs.card_title }}
 
 branding:
   icon: 'arrow-up-circle'
