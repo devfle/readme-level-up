@@ -38,8 +38,8 @@ if __name__ == "__main__":
     user_level, to_next_lvl = itemgetter("current_level",
                                          "percentage_level")(readme_instance.calc_current_level())
 
-    CONTRIBUTION_EP = readme_instance.contribution_ep
-    FOLLOWER_EP = readme_instance.follower_ep
+    CONTRIBUTION_EP = readme_instance.level_data.contribution_ep
+    FOLLOWER_EP = readme_instance.level_data.follower_ep
     # should be generated in later versions
     ep_information = (f"<pre>💪 1x contribute → { CONTRIBUTION_EP } experience points\n"
                       f"🌟 1x follower → { FOLLOWER_EP } experience points</pre>\n")
