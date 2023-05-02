@@ -5,8 +5,6 @@ from operator import itemgetter
 from readme_level import ReadmeLevel
 
 
-
-
 def draw_progress_bar(current_progress: float | int) -> str:
     """Draws the progress bar"""
     progress_bar_length: int = int(getenv("INPUT_PROGRESS_BAR_CHAR_LENGTH"))
@@ -17,7 +15,8 @@ def draw_progress_bar(current_progress: float | int) -> str:
     }
 
     progress_bar: str = ""
-    filled_progress: int = round(progress_bar_length * (current_progress / 100), 0)
+    filled_progress: int = round(
+        progress_bar_length * (current_progress / 100), 0)
 
     for index in range(progress_bar_length):
 
@@ -37,7 +36,7 @@ if __name__ == "__main__":
     readme_instance: ReadmeLevel = ReadmeLevel()
 
     user_level, to_next_lvl = itemgetter("current_level",
-                                        "percentage_level")(readme_instance.calc_current_level())
+                                         "percentage_level")(readme_instance.calc_current_level())
 
     CONTRIBUTION_EP = readme_instance.contribution_ep
     FOLLOWER_EP = readme_instance.follower_ep
@@ -55,12 +54,12 @@ if __name__ == "__main__":
                         f"{ ep_information if getenv('INPUT_SHOW_EP_INFO') else '' }"
                         f"{end_section}")
 
-
     # update readme
     with open(readme_path, mode="r", encoding="utf-8") as readme_file:
         readme_content = readme_file.read()
 
-    changed_readme = sub(search_pattern, repl=replace_str, string=readme_content)
+    changed_readme = sub(search_pattern, repl=replace_str,
+                         string=readme_content)
 
     with open(readme_path, mode="w", encoding="utf-8") as readme_file:
         readme_file.write(changed_readme)

@@ -3,6 +3,7 @@ from os import getenv
 from logging import error
 from requests import post
 from graphql_query import QUERY
+from readme_data import ReadmeLevelData
 
 
 class ReadmeLevel:
@@ -20,11 +21,8 @@ class ReadmeLevel:
     star_count: int = 0
     follower_count: int = 0
 
-    contribution_ep: int = 20
-    project_ep: int = 5
-    discussion_ep: int = 10
-    star_ep: int = 40
-    follower_ep: int = 25
+    level_data: ReadmeLevelData = ReadmeLevelData(
+        contribution_ep=20, project_ep=5, discussion_ep=10, star_ep=40, follower_ep=25)
 
     def __init__(self) -> None:
         pass
@@ -35,8 +33,8 @@ class ReadmeLevel:
         if not getenv("INPUT_GITHUB_TOKEN"):
             raise TypeError("github token is not a string")
 
-
-        auth_header = {"Authorization": "Bearer " + getenv("INPUT_GITHUB_TOKEN")}
+        auth_header = {"Authorization": "Bearer " +
+                       getenv("INPUT_GITHUB_TOKEN")}
         response = post("https://api.github.com/graphql",
                         json={"query": QUERY}, headers=auth_header, timeout=2)
 
@@ -47,7 +45,7 @@ class ReadmeLevel:
                          ["contributionsCollection"]["contributionCalendar"])
 
             user_data["totalFollowers"] = (response_data["data"]["user"]
-                         ["followers"]["totalCount"])
+                                           ["followers"]["totalCount"])
 
             return user_data
 
@@ -80,10 +78,10 @@ class ReadmeLevel:
 
         # calc the current experience points
         self.current_ep = (
-            self.contribution_count * self.contribution_ep +
-            self.project_count * self.project_ep +
-            self.discussion_count * self.discussion_ep +
-            self.follower_count * self.follower_ep)
+            self.contribution_count * self.level_data.contribution_ep +
+            self.project_count * self.level_data.project_ep +
+            self.discussion_count * self.level_data.discussion_ep +
+            self.follower_count * self.level_data.follower_ep)
 
         return self.current_ep
 
