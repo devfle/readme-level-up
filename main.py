@@ -31,35 +31,41 @@ def draw_progress_bar(current_progress: float | int) -> str:
     return progress_bar
 
 
-if __name__ == "__main__":
-
-    readme_instance: ReadmeLevel = ReadmeLevel()
-
+def generate_content(readme_instance: ReadmeLevel, start_section: str, end_section: str) -> str:
+    """Generates the content for readme file"""
     user_level, to_next_lvl = itemgetter("current_level",
                                          "percentage_level")(readme_instance.calc_current_level())
 
     CONTRIBUTION_EP = readme_instance.level_data.contribution_ep
     FOLLOWER_EP = readme_instance.level_data.follower_ep
+
     # should be generated in later versions
     ep_information = (f"<pre>💪 1x contribute → { CONTRIBUTION_EP } experience points\n"
                       f"🌟 1x follower → { FOLLOWER_EP } experience points</pre>\n")
 
-    readme_path: str = getenv("INPUT_README_PATH")
-    start_section: str = "<!--README_LEVEL_UP:START-->"
-    end_section: str = "<!--README_LEVEL_UP:END-->"
-    search_pattern: str = fr"{start_section}[\s\S]*?{end_section}"
-    replace_str: str = (f"{start_section}\n"
-                        f"{ getenv('INPUT_CARD_TITLE') if getenv('INPUT_CARD_TITLE') else '' } \n"
-                        f"<pre>level: { user_level }  { draw_progress_bar(to_next_lvl) } {round(to_next_lvl, 2)}%</pre>\n"
-                        f"{ ep_information if getenv('INPUT_SHOW_EP_INFO') else '' }"
-                        f"{end_section}")
+    return (f"{start_section}\n"
+            f"{ getenv('INPUT_CARD_TITLE') if getenv('INPUT_CARD_TITLE') else '' } \n"
+            f"<pre>level: { user_level }  { draw_progress_bar(to_next_lvl) } {round(to_next_lvl, 2)}%</pre>\n"
+            f"{ ep_information if getenv('INPUT_SHOW_EP_INFO') else '' }"
+            f"{end_section}")
+
+
+if __name__ == "__main__":
+
+    README_PATH: str = getenv("INPUT_README_PATH")
+    START_SECTION: str = "<!--README_LEVEL_UP:START-->"
+    END_SECTION: str = "<!--README_LEVEL_UP:END-->"
+    SEARCH_PATTERN: str = fr"{START_SECTION}[\s\S]*?{END_SECTION}"
+
+    replace_str: str = generate_content(
+        ReadmeLevel(), START_SECTION, END_SECTION)
 
     # update readme
-    with open(readme_path, mode="r", encoding="utf-8") as readme_file:
+    with open(README_PATH, mode="r", encoding="utf-8") as readme_file:
         readme_content = readme_file.read()
 
-    changed_readme = sub(search_pattern, repl=replace_str,
+    changed_readme = sub(SEARCH_PATTERN, repl=replace_str,
                          string=readme_content)
 
-    with open(readme_path, mode="w", encoding="utf-8") as readme_file:
+    with open(README_PATH, mode="w", encoding="utf-8") as readme_file:
         readme_file.write(changed_readme)
