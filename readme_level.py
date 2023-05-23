@@ -85,7 +85,8 @@ class ReadmeLevel:
 
         return self.current_ep
 
-    def calc_current_level(self) -> dict[str, int]:
+    @property
+    def get_current_level(self) -> dict[str, int]:
         """Calculates user level."""
 
         # get current user experience points
