@@ -47,7 +47,7 @@ class TestMainFile(unittest.TestCase):
         mock_readme_instance.level_data.contribution_ep = 20
         mock_readme_instance.level_data.follower_ep = 20
 
-        mock_readme_instance.calc_current_level.return_value = {
+        mock_readme_instance.get_current_level.return_value = {
             "current_level": "10", "percentage_level": 20}
 
         START_SECTION: str = "<!--README_LEVEL_UP:START-->"
