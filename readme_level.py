@@ -86,6 +86,16 @@ class ReadmeLevel:
         return self.current_ep
 
     @property
+    def get_contribution_ep(self) -> int:
+        """gets the contribution ep"""
+        return self.readme_data.contribution_ep
+
+    @property
+    def get_follower_ep(self) -> int:
+        """gets the follower ep"""
+        return self.readme_data.follower_ep
+
+    @property
     def get_current_level(self) -> dict[str, int]:
         """Calculates user level."""
 

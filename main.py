@@ -36,8 +36,8 @@ def generate_content(readme_instance: ReadmeLevel, start_section: str, end_secti
     user_level, to_next_lvl = itemgetter("current_level",
                                          "percentage_level")(readme_instance.get_current_level)
 
-    CONTRIBUTION_EP = readme_instance.level_data.contribution_ep
-    FOLLOWER_EP = readme_instance.level_data.follower_ep
+    CONTRIBUTION_EP = readme_instance.get_contribution_ep
+    FOLLOWER_EP = readme_instance.get_follower_ep
 
     # should be generated in later versions
     ep_information = (f"<pre>💪 1x contribute → { CONTRIBUTION_EP } experience points\n"
