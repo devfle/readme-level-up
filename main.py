@@ -33,7 +33,7 @@ def draw_progress_bar(current_progress: float | int) -> str:
 
 def generate_content(readme_instance: ReadmeLevel, start_section: str, end_section: str) -> str:
     """Generates the content for readme file"""
-    user_level, to_next_lvl = itemgetter("__current_level",
+    user_level, to_next_lvl = itemgetter("current_level",
                                          "percentage_level")(readme_instance.get_current_level)
 
     CONTRIBUTION_EP = readme_instance.get_contribution_ep
