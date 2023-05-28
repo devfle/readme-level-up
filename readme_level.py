@@ -9,17 +9,17 @@ from readme_data import ReadmeLevelData
 class ReadmeLevel:
     """Class that contains all the logic about the levelsystem."""
 
-    # static variables
-    max_level: int = 99
-    ep_to_next_level: int = 100
-    current_ep: int = 0
-    current_level: int = 1
+    # private variables
+    __max_level: int = 99
+    __ep_to_next_level: int = 100
+    __current_ep: int = 0
+    __current_level: int = 1
 
-    contribution_count: int = 0
-    project_count: int = 0
-    discussion_count: int = 0
-    star_count: int = 0
-    follower_count: int = 0
+    __contribution_count: int = 0
+    __project_count: int = 0
+    __discussion_count: int = 0
+    __star_count: int = 0
+    __follower_count: int = 0
 
     level_data: ReadmeLevelData = ReadmeLevelData(
         contribution_ep=20, project_ep=5, discussion_ep=10, star_ep=40, follower_ep=25)
@@ -61,10 +61,10 @@ class ReadmeLevel:
             error("failed to update user data, because fetched user data were empty")
 
         key_mapper = {
-            "totalContributions": "contribution_count",
-            "projects": "project_count",
-            "totalFollowers": "follower_count",
-            "discussions": "discussion_count"
+            "totalContributions": "__contribution_count",
+            "projects": "__project_count",
+            "totalFollowers": "__follower_count",
+            "discussions": "__discussion_count"
         }
 
         for key, value in user_stats.items():
@@ -77,13 +77,13 @@ class ReadmeLevel:
         self._update_user_data()
 
         # calc the current experience points
-        self.current_ep = (
-            self.contribution_count * self.level_data.contribution_ep +
-            self.project_count * self.level_data.project_ep +
-            self.discussion_count * self.level_data.discussion_ep +
-            self.follower_count * self.level_data.follower_ep)
+        self.__current_ep = (
+            self.__contribution_count * self.level_data.contribution_ep +
+            self.__project_count * self.level_data.project_ep +
+            self.__discussion_count * self.level_data.discussion_ep +
+            self.__follower_count * self.level_data.follower_ep)
 
-        return self.current_ep
+        return self.__current_ep
 
     @property
     def get_contribution_ep(self) -> int:
@@ -103,27 +103,27 @@ class ReadmeLevel:
         # maybe we should use return value instead of attributes?
         self.calc_current_ep()
 
-        while self.current_ep >= self.ep_to_next_level:
+        while self.__current_ep >= self.__ep_to_next_level:
 
-            if self.current_level > self.max_level:
-                self.current_level = self.max_level
+            if self.__current_level > self.__max_level:
+                self.__current_level = self.__max_level
                 break
 
             # increase user level
-            self.current_level += 1
-            self.current_ep -= self.ep_to_next_level
-            self.ep_to_next_level += 100
+            self.__current_level += 1
+            self.__current_ep -= self.__ep_to_next_level
+            self.__ep_to_next_level += 100
 
             percentage_level = self.percentage_ep_level(
-                self.current_ep, self.ep_to_next_level)
+                self.__current_ep, self.__ep_to_next_level)
 
         return {
-            "current_level": self.current_level,
-            "current_ep": self.current_ep,
-            "ep_to_next_level": self.ep_to_next_level,
+            "__current_level": self.__current_level,
+            "__current_ep": self.__current_ep,
+            "__ep_to_next_level": self.__ep_to_next_level,
             "percentage_level": percentage_level
         }
 
-    def percentage_ep_level(self, current_ep: int, ep_to_next_level: int) -> float:
+    def percentage_ep_level(self, __current_ep: int, __ep_to_next_level: int) -> float:
         """Helper function that calcs the percentage value to the next level"""
-        return current_ep / ep_to_next_level * 100
+        return __current_ep / __ep_to_next_level * 100
