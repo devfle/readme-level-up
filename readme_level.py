@@ -118,12 +118,12 @@ class ReadmeLevel:
                 self.__current_ep, self.__ep_to_next_level)
 
         return {
-            "__current_level": self.__current_level,
-            "__current_ep": self.__current_ep,
-            "__ep_to_next_level": self.__ep_to_next_level,
+            "current_level": self.__current_level,
+            "current_ep": self.__current_ep,
+            "ep_to_next_level": self.__ep_to_next_level,
             "percentage_level": percentage_level
         }
 
-    def percentage_ep_level(self, __current_ep: int, __ep_to_next_level: int) -> float:
+    def percentage_ep_level(self, current_ep: int, ep_to_next_level: int) -> float:
         """Helper function that calcs the percentage value to the next level"""
-        return __current_ep / __ep_to_next_level * 100
+        return current_ep / ep_to_next_level * 100
