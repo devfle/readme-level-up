@@ -45,8 +45,8 @@ def generate_content(readme_instance: ReadmeLevel, start_section: str, end_secti
 
     return (f"{start_section}\n"
             f"{ getenv('INPUT_CARD_TITLE') if getenv('INPUT_CARD_TITLE') else '' } \n"
-            f"<pre>level: { user_level }\
-            { draw_progress_bar(to_next_lvl) } {round(to_next_lvl, 2)}%</pre>\n"
+            f"<pre>level: { user_level } \
+{ draw_progress_bar(to_next_lvl) } {round(to_next_lvl, 2)}%</pre>\n"
             f"{ ep_information if getenv('INPUT_SHOW_EP_INFO') else '' }"
             f"{end_section}")
 
