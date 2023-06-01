@@ -50,16 +50,17 @@ class TestMainFile(unittest.TestCase):
         mock_readme_instance.get_current_level.return_value = {
             "current_level": "10", "percentage_level": 20}
 
-        START_SECTION: str = "<!--README_LEVEL_UP:START-->"
-        END_SECTION: str = "<!--README_LEVEL_UP:END-->"
+        start_section: str = "<!--README_LEVEL_UP:START-->"
+        end_section: str = "<!--README_LEVEL_UP:END-->"
 
         with patch('main.draw_progress_bar') as mock_draw_progress_bar:
             mock_draw_progress_bar.return_value = "██████░░░░░░░░░░░░░░░░░░░░░░░░"
 
             replace_str: str = generate_content(
-                mock_readme_instance, START_SECTION, END_SECTION)
+                mock_readme_instance, start_section, end_section)
 
-            # we check only if return value is from type str because the spaces makes it realy difficult to check for isEqual
+            # we check only if return value is from type str because the spaces makes
+            # it realy difficult to check for isEqual
             self.assertIsInstance(replace_str, str)
 
 

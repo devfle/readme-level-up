@@ -36,16 +36,17 @@ def generate_content(readme_instance: ReadmeLevel, start_section: str, end_secti
     user_level, to_next_lvl = itemgetter("current_level",
                                          "percentage_level")(readme_instance.get_current_level)
 
-    CONTRIBUTION_EP = readme_instance.get_contribution_ep
-    FOLLOWER_EP = readme_instance.get_follower_ep
+    contribution_ep = readme_instance.get_contribution_ep
+    follower_ep = readme_instance.get_follower_ep
 
     # should be generated in later versions
-    ep_information = (f"<pre>💪 1x contribute → { CONTRIBUTION_EP } experience points\n"
-                      f"🌟 1x follower → { FOLLOWER_EP } experience points</pre>\n")
+    ep_information = (f"<pre>💪 1x contribute → { contribution_ep } experience points\n"
+                      f"🌟 1x follower → { follower_ep } experience points</pre>\n")
 
     return (f"{start_section}\n"
             f"{ getenv('INPUT_CARD_TITLE') if getenv('INPUT_CARD_TITLE') else '' } \n"
-            f"<pre>level: { user_level }  { draw_progress_bar(to_next_lvl) } {round(to_next_lvl, 2)}%</pre>\n"
+            f"<pre>level: { user_level }  \
+            { draw_progress_bar(to_next_lvl) } {round(to_next_lvl, 2)}%</pre>\n"
             f"{ ep_information if getenv('INPUT_SHOW_EP_INFO') else '' }"
             f"{end_section}")
 
