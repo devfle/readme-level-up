@@ -15,12 +15,6 @@ class ReadmeLevel:
     current_ep: int = 0
     current_level: int = 1
 
-    contribution_count: int = 0
-    project_count: int = 0
-    discussion_count: int = 0
-    star_count: int = 0
-    follower_count: int = 0
-
     level_data: ReadmeLevelData = ReadmeLevelData(
         contribution_ep=20, project_ep=5, discussion_ep=10, star_ep=40, follower_ep=25)
 
@@ -52,36 +46,16 @@ class ReadmeLevel:
         error("request to github api failed")
         return None
 
-    def _update_user_data(self) -> None:
-        """Updates the user data from current object"""
-
-        user_stats = self.fetch_user_data()
-
-        if not user_stats:
-            error("failed to update user data, because fetched user data were empty")
-
-        key_mapper = {
-            "totalContributions": "contribution_count",
-            "projects": "project_count",
-            "totalFollowers": "follower_count",
-            "discussions": "discussion_count"
-        }
-
-        for key, value in user_stats.items():
-            setattr(self, key_mapper[key], value)
-
     def calc_current_ep(self) -> int:
         """Calculates the current user experience points"""
 
-        # update data first
-        self._update_user_data()
+        # get user stats
+        user_stats: dict[str, int] = self.fetch_user_data()
 
         # calc the current experience points
         self.current_ep = (
-            self.contribution_count * self.level_data.contribution_ep +
-            self.project_count * self.level_data.project_ep +
-            self.discussion_count * self.level_data.discussion_ep +
-            self.follower_count * self.level_data.follower_ep)
+            user_stats["totalContributions"] * self.level_data.contribution_ep +
+            user_stats["totalFollowers"] * self.level_data.follower_ep)
 
         return self.current_ep
 
