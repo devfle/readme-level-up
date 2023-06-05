@@ -9,17 +9,14 @@ from readme_data import ReadmeLevelData
 class ReadmeLevel:
     """Class that contains all the logic about the levelsystem."""
 
-    # static variables
-    max_level: int = 99
-    ep_to_next_level: int = 100
-    current_ep: int = 0
-    current_level: int = 1
-
     level_data: ReadmeLevelData = ReadmeLevelData(
         contribution_ep=20, project_ep=5, discussion_ep=10, star_ep=40, follower_ep=25)
 
     def __init__(self) -> None:
-        pass
+        self.max_level: int = 99
+        self.ep_to_next_level: int = 100
+        self.current_ep: int = 0
+        self.current_level: int = 1
 
     def fetch_user_data(self) -> dict[str, int] | None:
         """Fetches the user data from github api"""
@@ -74,10 +71,9 @@ class ReadmeLevel:
         """Calculates user level."""
 
         # get current user experience points
-        # maybe we should use return value instead of attributes?
-        self.calc_current_ep()
+        current_ep: int = self.calc_current_ep()
 
-        while self.current_ep >= self.ep_to_next_level:
+        while current_ep >= self.ep_to_next_level:
 
             if self.current_level > self.max_level:
                 self.current_level = self.max_level
@@ -85,11 +81,13 @@ class ReadmeLevel:
 
             # increase user level
             self.current_level += 1
-            self.current_ep -= self.ep_to_next_level
+            current_ep -= self.ep_to_next_level
             self.ep_to_next_level += 100
 
             percentage_level = self.percentage_ep_level(
-                self.current_ep, self.ep_to_next_level)
+                current_ep, self.ep_to_next_level)
+
+            self.current_ep = current_ep
 
         return {
             "current_level": self.current_level,
