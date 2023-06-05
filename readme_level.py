@@ -84,10 +84,11 @@ class ReadmeLevel:
             current_ep -= self.ep_to_next_level
             self.ep_to_next_level += 100
 
-            percentage_level = self.percentage_ep_level(
-                current_ep, self.ep_to_next_level)
+        percentage_level = self.percentage_ep_level(
+            current_ep, self.ep_to_next_level)
 
-            self.current_ep = current_ep
+        # sync current ep
+        self.current_ep = current_ep
 
         return {
             "current_level": self.current_level,
