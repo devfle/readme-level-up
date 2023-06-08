@@ -22,7 +22,7 @@ class ReadmeLevel:
         """Fetches the user data from github api"""
 
         if not getenv("INPUT_GITHUB_TOKEN"):
-            raise TypeError("github token is not a string")
+            raise TypeError("an error with the github token occurred")
 
         auth_header = {"Authorization": "Bearer " +
                        getenv("INPUT_GITHUB_TOKEN")}
@@ -41,7 +41,7 @@ class ReadmeLevel:
             return user_data
 
         error("request to github api failed")
-        return None
+        raise TypeError("request to github api failed")
 
     def calc_current_ep(self) -> int:
         """Calculates the current user experience points"""
