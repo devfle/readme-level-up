@@ -2,7 +2,15 @@
 from os import getenv
 from re import sub
 from operator import itemgetter
+from logging import basicConfig, INFO
 from readme_level import ReadmeLevel
+
+# set default config for application logging
+basicConfig(
+    level=INFO,
+    format="%(asctime)s %(levelname)s %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
 
 
 def draw_progress_bar(current_progress: float | int) -> str:

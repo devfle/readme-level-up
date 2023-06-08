@@ -1,6 +1,6 @@
 """Module that contains all the logic about the levelsystem."""
 from os import getenv
-from logging import error
+from logging import exception, info
 from requests import post
 from graphql_query import QUERY
 from readme_data import ReadmeLevelData
@@ -22,7 +22,7 @@ class ReadmeLevel:
         """Fetches the user data from github api"""
 
         if not getenv("INPUT_GITHUB_TOKEN"):
-            raise TypeError("an error with the github token occurred")
+            exception("an error with the github token occurred")
 
         auth_header = {"Authorization": "Bearer " +
                        getenv("INPUT_GITHUB_TOKEN")}
@@ -30,6 +30,8 @@ class ReadmeLevel:
                         json={"query": QUERY}, headers=auth_header, timeout=2)
 
         if response.status_code == 200:
+            info("request to github api was successfull")
+
             response_data = response.json()
 
             user_data = (response_data["data"]["user"]
@@ -40,8 +42,7 @@ class ReadmeLevel:
 
             return user_data
 
-        error("request to github api failed")
-        raise TypeError("request to github api failed")
+        exception("request to github api failed")
 
     def calc_current_ep(self) -> int:
         """Calculates the current user experience points"""
