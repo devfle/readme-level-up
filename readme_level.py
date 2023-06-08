@@ -43,6 +43,7 @@ class ReadmeLevel:
             return user_data
 
         exception("request to github api failed")
+        return None
 
     def calc_current_ep(self) -> int:
         """Calculates the current user experience points"""
