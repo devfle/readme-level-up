@@ -2,7 +2,7 @@
 
 Readme level up is a small action that converts interactions made on GitHub into experience points. If you have enough experience points your level increases. The action suits perfectly for the profile page on Github.
 
-<img width="509" alt="01" src="https://user-images.githubusercontent.com/52854338/213002429-c5cd4fa6-8342-4af9-8b28-40c1ac941b60.png">
+<img width="65%" alt="01" src="https://user-images.githubusercontent.com/52854338/213002429-c5cd4fa6-8342-4af9-8b28-40c1ac941b60.png">
 
 # Setup Action
 
