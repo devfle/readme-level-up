@@ -40,6 +40,9 @@ class ReadmeLevel:
             user_data["totalFollowers"] = (response_data["data"]["user"]
                                            ["followers"]["totalCount"])
 
+            user_data["totalRepositories"] = (response_data["data"]["user"]
+                                           ["repositories"]["totalCount"])
+
             return user_data
 
         exception("request to github api failed")
