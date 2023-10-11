@@ -46,10 +46,13 @@ def generate_content(readme_instance: ReadmeLevel, start_section: str, end_secti
 
     contribution_ep = readme_instance.get_contribution_ep
     follower_ep = readme_instance.get_follower_ep
+    project_ep = readme_instance.get_project_ep
+
 
     # should be generated in later versions
     ep_information = (f"<pre>💪 1x contribute → { contribution_ep } experience points\n"
-                      f"🌟 1x follower → { follower_ep } experience points</pre>\n")
+                      f"🌟 1x follower → { follower_ep } experience points\n"
+                      f"📁 1x repository → { project_ep } experience points</pre>\n")
 
     return (f"{start_section}\n"
             f"{ getenv('INPUT_CARD_TITLE') if getenv('INPUT_CARD_TITLE') else '' } \n"

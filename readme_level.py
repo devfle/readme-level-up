@@ -54,19 +54,29 @@ class ReadmeLevel:
         # calc the current experience points
         self.current_ep = (
             user_stats["totalContributions"] * self.level_data.contribution_ep +
-            user_stats["totalFollowers"] * self.level_data.follower_ep)
+            user_stats["totalFollowers"] * self.level_data.follower_ep +
+            user_stats["totalRepositories"] * self.level_data.project_ep)
 
         return self.current_ep
 
+    # should be part of data class
     @property
     def get_contribution_ep(self) -> int:
         """gets the contribution ep"""
         return self.level_data.contribution_ep
 
+
+    # should be part of data class
     @property
     def get_follower_ep(self) -> int:
         """gets the follower ep"""
         return self.level_data.follower_ep
+
+    # should be part of data class
+    @property
+    def get_project_ep(self) -> int:
+        """gets the project ep"""
+        return self.level_data.project_ep
 
     @property
     def get_current_level(self) -> dict[str, int]:

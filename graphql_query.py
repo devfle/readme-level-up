@@ -12,6 +12,9 @@ QUERY = f"""
                     followers {{
                         totalCount
                     }}
+                    RepositoryConnection {{
+                        totalCount
+                    }}
                 }}
             }}
         """
