@@ -29,12 +29,13 @@ class TestLevelSystem(unittest.TestCase):
         """Tests the ep calc"""
         mock_fetch_user_data.return_value = {
             "totalContributions": 120,
-            "totalFollowers": 12
+            "totalFollowers": 12,
+            "totalRepositories": 5
         }
 
         readme_instance: ReadmeLevel = ReadmeLevel()
         readme_instance.calc_current_ep()
-        self.assertEqual(readme_instance.current_ep, 2700)
+        self.assertEqual(readme_instance.current_ep, 2725)
 
 
 if __name__ == '__main__':
