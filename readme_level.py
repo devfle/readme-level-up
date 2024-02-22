@@ -1,8 +1,8 @@
 """Module that contains all the logic about the levelsystem."""
 from os import getenv
+from datetime import datetime
 from logging import exception, info
 from requests import post
-from datetime import datetime
 from graphql_query import QUERY
 from readme_data import ReadmeLevelData
 
@@ -24,7 +24,7 @@ class ReadmeLevel:
 
         if not getenv("INPUT_GITHUB_TOKEN"):
             exception("an error with the github token occurred")
-        
+
         auth_header = {"Authorization": "Bearer " +
                        getenv("INPUT_GITHUB_TOKEN")}
         response = post("https://api.github.com/graphql",
@@ -41,10 +41,10 @@ class ReadmeLevel:
             while current_year >= 2015:
                 contribution_count = (response_data["data"]["user"]
                         ["_" + str(current_year)]["contributionCalendar"]["totalContributions"])
-                
+
                 total_contribution.append(contribution_count)
                 current_year -= 1
-                
+
 
             user_data = {}
 
