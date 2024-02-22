@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout project
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: update markdown file
         uses: devfle/readme-level-up@main
         with:
