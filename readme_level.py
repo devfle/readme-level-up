@@ -1,5 +1,6 @@
 """Module that contains all the logic about the levelsystem."""
 from os import getenv
+from datetime import datetime
 from logging import exception, info
 from requests import post
 from graphql_query import QUERY
@@ -34,8 +35,20 @@ class ReadmeLevel:
 
             response_data = response.json()
 
-            user_data = (response_data["data"]["user"]
-                         ["contributionsCollection"]["contributionCalendar"])
+            current_year = datetime.now().year
+            total_contribution = []
+
+            while current_year >= 2015:
+                contribution_count = (response_data["data"]["user"]
+                        ["_" + str(current_year)]["contributionCalendar"]["totalContributions"])
+
+                total_contribution.append(contribution_count)
+                current_year -= 1
+
+
+            user_data = {}
+
+            user_data["totalContributions"] = sum(total_contribution)
 
             user_data["totalFollowers"] = (response_data["data"]["user"]
                                            ["followers"]["totalCount"])
