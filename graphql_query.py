@@ -9,7 +9,7 @@ contribution_list = []
 # in a later version we can replace the 2015 date with user input
 while current_year >= 2015:
 
-    temp_query = f"""
+    TEMP_QUERY = f"""
                     {"_" + str(current_year)}: contributionsCollection(from: "{str(current_year)}-01-01T00:00:00") {{
                         contributionCalendar {{
                             totalContributions
@@ -17,7 +17,7 @@ while current_year >= 2015:
                     }}
                 """
 
-    contribution_list.append(temp_query)
+    contribution_list.append(TEMP_QUERY)
     current_year -= 1
 
 QUERY = f"""
