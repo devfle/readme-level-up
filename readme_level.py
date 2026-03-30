@@ -3,7 +3,7 @@ from os import getenv
 from datetime import datetime
 from logging import exception, info
 from requests import post
-from graphql_query import QUERY
+from graphql_query import stable_query
 from readme_data import ReadmeLevelData
 
 
@@ -28,7 +28,7 @@ class ReadmeLevel:
         auth_header = {"Authorization": "Bearer " +
                        getenv("INPUT_GITHUB_TOKEN")}
         response = post("https://api.github.com/graphql",
-                        json={"query": QUERY}, headers=auth_header, timeout=2)
+                        json={"query": stable_query}, headers=auth_header, timeout=2)
 
         if response.status_code == 200:
             info("request to github api was successfull")
