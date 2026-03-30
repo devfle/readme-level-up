@@ -20,7 +20,7 @@ while current_year >= 2015:
     contribution_list.append(temp_query)
     current_year -= 1
 
-stable_query = f"""
+REQUEST_QUERY = f"""
             {{
                 user(login: "{getenv("INPUT_GITHUB_USERNAME")}") {{
                     {linesep.join(contribution_list)}
