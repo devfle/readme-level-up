@@ -9,7 +9,7 @@ contribution_list = []
 # in a later version we can replace the 2015 date with user input
 while current_year >= 2015:
 
-    TEMP_QUERY = f"""
+    temp_query = f"""
                     {"_" + str(current_year)}: contributionsCollection(from: "{str(current_year)}-01-01T00:00:00") {{
                         contributionCalendar {{
                             totalContributions
@@ -17,10 +17,10 @@ while current_year >= 2015:
                     }}
                 """
 
-    contribution_list.append(TEMP_QUERY)
+    contribution_list.append(temp_query)
     current_year -= 1
 
-QUERY = f"""
+REQUEST_QUERY = f"""
             {{
                 user(login: "{getenv("INPUT_GITHUB_USERNAME")}") {{
                     {linesep.join(contribution_list)}
