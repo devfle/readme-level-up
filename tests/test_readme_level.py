@@ -60,7 +60,7 @@ class TestLevelSystem(unittest.TestCase):
     @patch.dict(os.environ, {"INPUT_GITHUB_TOKEN": "test-token"}, clear=True)
     @patch('readme_level.post')
     def test_fetch_user_data_unsuccessful_response(self, mock_post):
-        """Tests fetch_user_data handles non 200 responses."""
+        """Tests fetch_user_data handles non-200 responses."""
         mock_post.return_value = MagicMock(status_code=500)
 
         readme_instance: ReadmeLevel = ReadmeLevel()

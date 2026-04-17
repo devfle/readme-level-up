@@ -41,7 +41,7 @@ class ReadmeLevel:
             error("request to github api failed with status code %s", response.status_code)
             return None
 
-        info("request to github api was successfull")
+        info("request to github api was successful")
 
         response_data = response.json()
 

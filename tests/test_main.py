@@ -60,7 +60,7 @@ class TestMainFile(unittest.TestCase):
                 mock_readme_instance, start_section, end_section)
 
             # we check only if return value is from type str because the spaces makes
-            # it realy difficult to check for isEqual
+            # it really difficult to check for isEqual
             self.assertIsInstance(replace_str, str)
 
     @patch.dict(os.environ, {'INPUT_SHOW_EP_INFO': 'false'}, clear=True)
