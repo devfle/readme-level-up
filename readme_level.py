@@ -1,8 +1,9 @@
 """Module that contains all the logic about the levelsystem."""
 from os import getenv
 from datetime import datetime
-from logging import exception, info
+from logging import exception, info, error
 from requests import post
+from requests.exceptions import RequestException
 from graphql_query import REQUEST_QUERY
 from readme_data import ReadmeLevelData
 
@@ -22,29 +23,38 @@ class ReadmeLevel:
     def fetch_user_data(self) -> dict[str, int] | None:
         """Fetches the user data from github api"""
 
-        if not getenv("INPUT_GITHUB_TOKEN"):
-            exception("an error with the github token occurred")
+        github_token: str | None = getenv("INPUT_GITHUB_TOKEN")
+        if not github_token:
+            error("missing github token")
+            return None
 
-        auth_header = {"Authorization": "Bearer " +
-                       getenv("INPUT_GITHUB_TOKEN")}
-        response = post("https://api.github.com/graphql",
-                        json={"query": REQUEST_QUERY}, headers=auth_header, timeout=2)
+        auth_header = {"Authorization": "Bearer " + github_token}
 
-        if response.status_code == 200:
-            info("request to github api was successfull")
+        try:
+            response = post("https://api.github.com/graphql",
+                            json={"query": REQUEST_QUERY}, headers=auth_header, timeout=2)
+        except RequestException:
+            exception("request to github api failed")
+            return None
 
-            response_data = response.json()
+        if response.status_code != 200:
+            error("request to github api failed with status code %s", response.status_code)
+            return None
 
-            current_year = datetime.now().year
-            total_contribution = []
+        info("request to github api was successful")
 
+        response_data = response.json()
+
+        current_year = datetime.now().year
+        total_contribution = []
+
+        try:
             while current_year >= 2015:
                 contribution_count = (response_data["data"]["user"]
                         ["_" + str(current_year)]["contributionCalendar"]["totalContributions"])
 
                 total_contribution.append(contribution_count)
                 current_year -= 1
-
 
             user_data = {}
 
@@ -54,18 +64,21 @@ class ReadmeLevel:
                                            ["followers"]["totalCount"])
 
             user_data["totalRepositories"] = (response_data["data"]["user"]
-                                           ["repositories"]["totalCount"])
+                                              ["repositories"]["totalCount"])
+        except (KeyError, TypeError):
+            exception("github api response is malformed")
+            return None
 
-            return user_data
-
-        exception("request to github api failed")
-        return None
+        return user_data
 
     def calc_current_ep(self) -> int:
         """Calculates the current user experience points"""
 
         # get user stats
-        user_stats: dict[str, int] = self.fetch_user_data()
+        user_stats: dict[str, int] | None = self.fetch_user_data()
+        if user_stats is None:
+            self.current_ep = 0
+            return self.current_ep
 
         # calc the current experience points
         self.current_ep = (
