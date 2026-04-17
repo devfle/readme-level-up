@@ -63,6 +63,25 @@ class TestMainFile(unittest.TestCase):
             # it realy difficult to check for isEqual
             self.assertIsInstance(replace_str, str)
 
+    @patch.dict(os.environ, {'INPUT_SHOW_EP_INFO': 'false'}, clear=True)
+    def test_generate_content_without_ep_info(self) -> None:
+        """Tests generated content without ep information."""
+        mock_readme_instance = MagicMock()
+        mock_readme_instance.get_current_level.return_value = {
+            "current_level": "10", "percentage_level": 20}
+        mock_readme_instance.get_contribution_ep = 20
+        mock_readme_instance.get_follower_ep = 20
+        mock_readme_instance.get_project_ep = 5
+
+        with patch('main.draw_progress_bar', return_value="███"):
+            replace_str: str = generate_content(
+                mock_readme_instance,
+                "<!--README_LEVEL_UP:START-->",
+                "<!--README_LEVEL_UP:END-->"
+            )
+
+        self.assertNotIn("experience points", replace_str)
+
 
 if __name__ == '__main__':
     unittest.main()
