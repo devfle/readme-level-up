@@ -5,6 +5,8 @@ from operator import itemgetter
 from logging import basicConfig, INFO
 from readme_level import ReadmeLevel
 
+DEFAULT_PROGRESS_BAR_CHAR_LENGTH: int = 30
+
 # set default config for application logging
 basicConfig(
     level=INFO,
@@ -13,29 +15,42 @@ basicConfig(
 )
 
 
+def _get_progress_bar_length() -> int:
+    """Gets and validates the progress bar length from environment variables."""
+    progress_bar_length: str | None = getenv("INPUT_PROGRESS_BAR_CHAR_LENGTH")
+
+    if not progress_bar_length:
+        return DEFAULT_PROGRESS_BAR_CHAR_LENGTH
+
+    try:
+        value: int = int(progress_bar_length)
+    except ValueError:
+        return DEFAULT_PROGRESS_BAR_CHAR_LENGTH
+
+    return value if value > 0 else DEFAULT_PROGRESS_BAR_CHAR_LENGTH
+
+
+def _env_is_truthy(var_name: str) -> bool:
+    """Converts common environment variable values to a boolean."""
+    return getenv(var_name, "").lower() in {"1", "true", "yes", "on"}
+
+
 def draw_progress_bar(current_progress: float | int) -> str:
     """Draws the progress bar"""
-    progress_bar_length: int = int(getenv("INPUT_PROGRESS_BAR_CHAR_LENGTH"))
+    progress_bar_length: int = _get_progress_bar_length()
+    current_progress = max(0.0, min(100.0, float(current_progress)))
 
     progress_bar_content = {
         "empty_bar": getenv("INPUT_EMPTY_BAR"),
         "filled_bar": getenv("INPUT_FILLED_BAR")
     }
 
-    progress_bar: str = ""
     filled_progress: int = round(
         progress_bar_length * (current_progress / 100), 0)
-
-    for index in range(progress_bar_length):
-
-        # because the index starts at 0 we reduce filled_progress
-        # we should define our own index
-        if index <= filled_progress - 1:
-            progress_bar += progress_bar_content["filled_bar"]
-
-        if index > filled_progress - 1:
-            progress_bar += progress_bar_content["empty_bar"]
-
+    progress_bar: str = (
+        progress_bar_content["filled_bar"] * int(filled_progress) +
+        progress_bar_content["empty_bar"] * (progress_bar_length - int(filled_progress))
+    )
     return progress_bar
 
 
@@ -58,7 +73,7 @@ def generate_content(readme_instance: ReadmeLevel, start_section: str, end_secti
             f"{ getenv('INPUT_CARD_TITLE') if getenv('INPUT_CARD_TITLE') else '' } \n"
             f"<pre>level: { user_level } \
 { draw_progress_bar(to_next_lvl) } {round(to_next_lvl, 2)}%</pre>\n"
-            f"{ ep_information if getenv('INPUT_SHOW_EP_INFO') else '' }"
+            f"{ ep_information if _env_is_truthy('INPUT_SHOW_EP_INFO') else '' }"
             f"{end_section}")
 
 
